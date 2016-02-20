@@ -1,5 +1,6 @@
 -- Florida man
-
+supportedOrientations(LANDSCAPE_ANY)
+displayMode(FULLSCREEN_NO_BUTTONS)
 function game1setup()
     enemy = vec2(WIDTH/2,0)
     person = vec2(WIDTH/4,HEIGHT/4)
@@ -9,7 +10,7 @@ end
 
 function setup()
     --person = vec2(WIDTH/4,HEIGHT/4)
-    game = 1
+    game = 3
     rectMode(CORNER)
     spriteMode(CORNER)
     touching = false
@@ -32,6 +33,14 @@ function game2setup()
     person.x = WIDTH/4
 end
 
+function game3setup()
+
+enemy.y = HEIGHT
+enemy.x = WIDTH*3/4
+person.x = WIDTH/8
+person.y = 0
+end
+
 -- This function gets called once every frame
 function draw()
     -- This sets a dark background color 
@@ -52,7 +61,7 @@ function draw()
             touching = false
         end
    -- rect(person.x,person.y,WIDTH/25,HEIGHT/8)
-        sprite("Project:player",person.x,person.y,WIDTH/20,HEIGHT/12)
+        sprite("Project:player",person.x,person.y,WIDTH/15,HEIGHT/8)
         if (CurrentTouch.x > person.x and CurrentTouch.state ~= ENDED) or touching then
             touching = true
             person.x = person.x + 1.25
@@ -64,7 +73,7 @@ function draw()
         sprite("Project:honey",WIDTH*7/8,person.y)
         sprite("Project:bee",enemy.x,math.sin(enemy.y)*HEIGHT/4+HEIGHT/4,WIDTH/8)
             enemy.y = enemy.y + .01
-        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/12) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/20 < enemy.x+WIDTH/8 then
+        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/8) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/15 < enemy.x+WIDTH/8 then
             lives = lives - 1
             game = game + 1
             game2setup()
@@ -76,8 +85,7 @@ function draw()
         if CurrentTouch.state == ENDED then
             touching = false
         end
-   -- rect(person.x,person.y,WIDTH/25,HEIGHT/8)
-        sprite("Project:player",person.x,person.y,WIDTH/20,HEIGHT/12)
+        sprite("Project:player",person.x,person.y,WIDTH/15,HEIGHT/8)
         if (CurrentTouch.x > person.x and CurrentTouch.state ~= ENDED) or touching then
             touching = true
             person.x = person.x + 1.75
@@ -88,7 +96,7 @@ function draw()
         sprite("Project:honey",WIDTH*7/8,person.y)
         sprite("Project:bee",enemy.x,math.sin(enemy.y)*HEIGHT/4+HEIGHT/4,WIDTH/8)
             enemy.y = enemy.y + .025
-        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/12) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/20 < enemy.x+WIDTH/8 then
+        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/8) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/15 < enemy.x+WIDTH/8 then
             lives = lives - 1
             game = game + 1
         end
@@ -101,8 +109,14 @@ function draw()
             game = game + 1
         end
         end
-    -- This sets the line thickness
 
-    -- Do your drawing here
+    if game == 3 then
+        --enemy = foot
+        --player use sprite in wheelchair
+
+        sprite("Project:scooter_chase", 0,0,WIDTH,HEIGHT/4)
+        sprite(")
+
+    end
     
 end
