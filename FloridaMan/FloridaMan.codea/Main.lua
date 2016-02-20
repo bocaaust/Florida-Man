@@ -1,15 +1,35 @@
 -- Florida man
 
--- Use this function to perform your initial setup
-function setup()
+function game1setup()
+    enemy = vec2(WIDTH/2,0)
     person = vec2(WIDTH/4,HEIGHT/4)
+end
+
+-- Use this function to perform your initial setup
+
+function setup()
+    --person = vec2(WIDTH/4,HEIGHT/4)
     game = 1
     rectMode(CORNER)
     spriteMode(CORNER)
     touching = false
     time = ElapsedTime
     lives = 3
-    enemy = vec2(WIDTH/2,0)
+    enemy = vec2(0,0)
+    enemy2 = vec2(0,0)
+    if game == 1 then
+        game1setup()
+    end
+end
+
+function game2setup()
+   -- enemy2.x = enemy.x
+    --enemy2.y = enemy.y
+    enemy2.y = .4
+    enemy.y = 0
+    enemy2.x = WIDTH*2/3
+    enemy.x = WIDTH/3
+    person.x = WIDTH/4
 end
 
 -- This function gets called once every frame
@@ -18,15 +38,16 @@ function draw()
     background(255, 255, 255, 255)
     for i = 1,3 do
         fontSize(90)
+        fill(255, 0, 0, 175)
         if i <= lives then
         text("❤️",WIDTH/8,HEIGHT-i*HEIGHT/8)
             else
             text("💔",WIDTH/8,HEIGHT-i*HEIGHT/8)
             end
     end
+    --bee game
     if game == 1 then
         sprite("Project:bees headline",0,HEIGHT/7.5,WIDTH)
-        fill(255, 0, 0, 255)
         if CurrentTouch.state == ENDED then
             touching = false
         end
@@ -38,11 +59,44 @@ function draw()
         end
         if person.x >= WIDTH*7/8 then
             game = game + 1
+            game2setup()
         end
         sprite("Project:honey",WIDTH*7/8,person.y)
-        sprite("Project:bee",enemy.x,math.sin(enemy.y)*HEIGHT/4+HEIGHT/8,HEIGHT/8)
+        sprite("Project:bee",enemy.x,math.sin(enemy.y)*HEIGHT/4+HEIGHT/4,WIDTH/8)
             enemy.y = enemy.y + .01
-        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/8) < (person.y+HEIGHT/12) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/20 < enemy.x+HEIGHT/8 then
+        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/12) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/20 < enemy.x+WIDTH/8 then
+            lives = lives - 1
+            game = game + 1
+            game2setup()
+        end
+        end
+    
+    if game == 2 then
+        sprite("Project:bees headline",0,HEIGHT/7.5,WIDTH)
+        if CurrentTouch.state == ENDED then
+            touching = false
+        end
+   -- rect(person.x,person.y,WIDTH/25,HEIGHT/8)
+        sprite("Project:player",person.x,person.y,WIDTH/20,HEIGHT/12)
+        if (CurrentTouch.x > person.x and CurrentTouch.state ~= ENDED) or touching then
+            touching = true
+            person.x = person.x + 1.75
+        end
+        if person.x >= WIDTH*7/8 then
+            game = game + 1
+        end
+        sprite("Project:honey",WIDTH*7/8,person.y)
+        sprite("Project:bee",enemy.x,math.sin(enemy.y)*HEIGHT/4+HEIGHT/4,WIDTH/8)
+            enemy.y = enemy.y + .025
+        if (math.sin(enemy.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/12) and math.sin(enemy.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy.x and person.x+WIDTH/20 < enemy.x+WIDTH/8 then
+            lives = lives - 1
+            game = game + 1
+        end
+        
+        
+        sprite("Project:bee",enemy2.x,math.sin(enemy2.y)*HEIGHT/4+HEIGHT/4,WIDTH/8)
+            enemy2.y = enemy2.y + .025
+        if (math.sin(enemy2.y)*HEIGHT/4+HEIGHT/4) < (person.y+HEIGHT/12) and math.sin(enemy2.y)*HEIGHT/4+HEIGHT/8+HEIGHT/4 > person.y and person.x > enemy2.x and person.x+WIDTH/20 < enemy2.x+WIDTH/8 then
             lives = lives - 1
             game = game + 1
         end
@@ -52,4 +106,3 @@ function draw()
     -- Do your drawing here
     
 end
-
