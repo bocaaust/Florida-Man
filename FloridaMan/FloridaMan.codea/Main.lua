@@ -47,7 +47,7 @@ function draw()
     end
     --bee game
     if game == 1 then
-        sprite("Project:bees headline",0,HEIGHT/7.5,WIDTH)
+        sprite("Project:bees headline",0,0,WIDTH,HEIGHT/4)
         if CurrentTouch.state == ENDED then
             touching = false
         end
@@ -72,7 +72,7 @@ function draw()
         end
     
     if game == 2 then
-        sprite("Project:bees headline",0,HEIGHT/7.5,WIDTH)
+        sprite("Project:bees headline",0,0,WIDTH,HEIGHT/4)
         if CurrentTouch.state == ENDED then
             touching = false
         end
