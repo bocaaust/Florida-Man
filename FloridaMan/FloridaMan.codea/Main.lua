@@ -9,9 +9,10 @@ end
 -- Use this function to perform your initial setup
 
 function setup()
+    test = 0
     --person = vec2(WIDTH/4,HEIGHT/4)
     person = vec2(0,0)
-    game = 3
+    game = 4
     rectMode(CORNER)
     spriteMode(CORNER)
     touching = false
@@ -24,6 +25,9 @@ function setup()
     end
     if game == 3 then
         game3setup()
+    end
+    if game == 4 then
+        game4setup()
     end
 end
 
@@ -43,6 +47,16 @@ enemy.y = HEIGHT
 enemy.x = WIDTH*3/4
 person.x = WIDTH/8
 person.y = HEIGHT/4
+touching = false
+end
+
+
+function game4setup()
+person.x = math.random(1,3)
+enemy.y = -WIDTH/4
+enemy.x = WIDTH/4
+enemy2.x = person.x*WIDTH/4+WIDTH/16
+enemy2.y = HEIGHT/2
 touching = false
 end
 
@@ -136,6 +150,39 @@ function draw()
 
 
 
+    end
+
+    if game == 4 then
+    --enemy will be alligators position
+    --enemy2 will be position of mushroom
+    --assign mushroom through math.random(1,3)
+    for i = 1,3 do
+        --sprite("Project:Alligator",)
+        rect(enemy.x*i,enemy.y,WIDTH/6,HEIGHT/2)
+    end
+
+    --Draw magic mushroom
+    --sprite("Project:mushroom")
+    rect(enemy2.x, enemy2.y, WIDTH/16, WIDTH/16)
+
+
+    if CurrentTouch.state == BEGAN then
+        test = CurrentTouch.x
+        --Check which alligator touched
+        if (test >= WIDTH*4*person.x and test <= WIDTH*4*person.x+WIDTH/6) then
+            touching = true
+            --Shoot up alligator
+
+        else
+            lives = lives - 1
+            game = game + 1
+        end
+    end
+
+    if touching then
+        --Start bringing alligators up
+
+    end
     end
     
 end
