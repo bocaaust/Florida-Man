@@ -1,6 +1,7 @@
 -- Florida man
 supportedOrientations(LANDSCAPE_ANY)
 displayMode(FULLSCREEN_NO_BUTTONS)
+
 function game1setup()
     enemy = vec2(WIDTH/2,0)
     person = vec2(WIDTH/4,HEIGHT/4)
@@ -12,7 +13,7 @@ function setup()
     test = 0
     --person = vec2(WIDTH/4,HEIGHT/4)
     person = vec2(0,0)
-    game = 4
+    game = 3
     rectMode(CORNER)
     spriteMode(CORNER)
     touching = false
@@ -44,7 +45,7 @@ end
 function game3setup()
 
 enemy.y = HEIGHT
-enemy.x = WIDTH*3/4
+enemy.x = WIDTH*7/8
 person.x = WIDTH/8
 person.y = HEIGHT/4
 touching = false
@@ -144,11 +145,15 @@ function draw()
 
         if touching then
             sprite("Project:player_chair",person.x,person.y,WIDTH/6.5,HEIGHT/6)
-            person.y = person.y + 1
-            person.x = person.x + 3.5
+            person.y = person.y + .85
+            person.x = person.x + 5
         end
 
 
+
+        sprite("Project:foot",enemy.x,enemy.y,WIDTH/8,HEIGHT/6)
+
+        enemy.y = enemy.y - 2
 
     end
 
@@ -166,10 +171,11 @@ function draw()
     rect(enemy2.x, enemy2.y, WIDTH/16, WIDTH/16)
 
 
-    if CurrentTouch.state == BEGAN then
+    if CurrentTouch.state == BEGAN and touching == false then
         test = CurrentTouch.x
         --Check which alligator touched
-        if (test >= WIDTH*4*person.x and test <= WIDTH*4*person.x+WIDTH/6) then
+
+        if (test >= WIDTH/4*person.x and test <= WIDTH/4*person.x+WIDTH/6) then
             touching = true
             --Shoot up alligator
 
@@ -179,9 +185,9 @@ function draw()
         end
     end
 
-    if touching then
+    if touching and enemy.y < 0 then
         --Start bringing alligators up
-
+        enemy.y = enemy.y + 3
     end
     end
     
