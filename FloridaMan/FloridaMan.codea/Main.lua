@@ -14,7 +14,7 @@ music("Project:FloridaManBG",true)
 points = 0
 textMode(CENTER)
 gameMax = 4
-gsetups = {game1setup,game2setup,game3setup,game4setup}
+gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup}
 test = 0
 --person = vec2(WIDTH/4,HEIGHT/4)
 person = vec2(0,0)
@@ -25,17 +25,10 @@ time = ElapsedTime
 lives = 3
 enemy = vec2(0,0)
 enemy2 = vec2(0,0)
--- if game == 1 then
---   game1setup()
---end
---if game == 3 then
---      game3setup()
---  end
--- if game == 4 then
---    game4setup()
--- end
 
-game = math.random(1,gameMax)
+
+--game = math.random(1,gameMax)
+game = 4
 gsetups[game]()
 end
 
@@ -69,6 +62,26 @@ enemy.x = WIDTH/4
 enemy2.x = person.x*WIDTH/4+WIDTH/16
 enemy2.y = HEIGHT/2
 touching = false
+end
+
+function game5setup()
+person = vec2(WIDTH/5,HEIGHT/4)
+enemy = vec2(WIDTH/3.4,HEIGHT/4)
+touching = false
+end
+
+function game6setup()
+touching = false
+--person.x = #, y = 0 for row 1 for column
+--enemy.x = one missing
+--enemy2 = touch position
+enemy2.x = 0
+enemy2.y = 0
+
+person.x = math.random(1,3)
+person.y = math.random(0,1)
+enemy.x = math.random(1,3)
+
 end
 
 -- This function gets called once every frame
@@ -201,7 +214,7 @@ currentgame = gsetups[game]
 currentgame()
 end
 
-if person.x > WIDTH*7/8 and person.y >= enemy.y+WIDTH/25 and person.y < enemy.y+HEIGHT/6-WIDTH/25  then
+if person.x > WIDTH*7/8 and person.y >= enemy.y+WIDTH/20 and person.y < enemy.y+HEIGHT/6-WIDTH/20  then
 game = math.random(1,gameMax)
 points = points +1
 currentgame = gsetups[game]
@@ -229,7 +242,6 @@ sprite("Project:magic-mushroom",enemy2.x, enemy2.y, WIDTH/14)
 if CurrentTouch.state == BEGAN and touching == false then
 test = CurrentTouch.x
 --Check which alligator touched
-
 if (test >= WIDTH/4*person.x and test <= WIDTH/4*person.x+WIDTH/6) then
 touching = true
 --Shoot up alligator
@@ -245,7 +257,8 @@ end
 if touching and enemy.y < 0 then
 --Start bringing alligators up
 enemy.y = enemy.y + 3
-else
+end
+if (enemy.y >= 0) then
 points = points +1
 game = math.random(1,gameMax)
 currentgame = gsetups[game]
@@ -254,5 +267,53 @@ end
 
 end
 
+end
+
+if game == 5 then
+rect(enemy.x,enemy.y,WIDTH/15,HEIGHT/8)
+
+if CurrentTouch.state == ENDED then
+touching = true
+end
+sprite("Project:player_XXX",person.x,person.y,WIDTH/15,HEIGHT/8)
+enemy.x = enemy.x + 1.25
+if (CurrentTouch.x > person.x and CurrentTouch.state == BEGAN) and touching then
+touching = false
+person.x = person.x + 20
+end
+if person.x > enemy.x+(WIDTH/15) then
+game = math.random(1,gameMax)
+points = points +1
+currentgame = gsetups[game]
+currentgame()
+end
+if enemy.x >=WIDTH then
+lives = lives - 1
+game = math.random(1,gameMax)
+currentgame = gsetups[game]
+currentgame()
+end
+end
+
+if game == 6 then
+--person.x = #, y = 0 for row 1 for column
+--enemy.x = one missing
+--enemy2 = touch position
+fill(255,0,0,255)
+if CurrentTouch.state == ENDED then
+touching = true
+end
+
+sprite("Project:bingo_plate",WIDTH/5,HEIGHT/5,WIDTH/2,HEIGHT/5*4)
+for i = 1,3 do
+if i ~= enemy.x then
+if person.y == 0 then
+ellipse(WIDTH/4.5+i*WIDTH/6,HEIGHT/5+person.x*HEIGHT/5,WIDTH/8)
+else
+ellipse(HEIGHT/5+person.x*HEIGHT/5,WIDTH/4.5+i*WIDTH/6,WIDTH/8)
+end
+end
+end
+sprite("Project:bingo",0,0,WIDTH,HEIGHT/5)
 end
 end
