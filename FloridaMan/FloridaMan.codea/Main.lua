@@ -304,12 +304,11 @@ function draw()
         if CurrentTouch.state == ENDED then
             touching = true
         end
-
         sprite("Project:bingo_plate",WIDTH/5,HEIGHT/5,WIDTH/2,HEIGHT/5*4)
         for i = 1,3 do
             if i ~= enemy.x then
                 if person.y == 0 then
-                    ellipse(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+person.x*HEIGHT/7.5,WIDTH/8)
+                    ellipse(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(person.x-1)*HEIGHT/5,WIDTH/8)
                 else
                     ellipse(WIDTH/9+WIDTH/5+(person.x-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8)
                 end
