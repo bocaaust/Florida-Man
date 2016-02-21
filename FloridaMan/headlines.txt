@@ -6,12 +6,15 @@ Boss
 
 Kiss!
 	Florida Man Bitten By Snake That Friends Say He Enjoyed Kissing
+		Tap the snake to kiss it
 
 Fit/shove
 	Florida Man Arrested for Grand Theft After Trying to Walk Out of Store with AK-47s Stuffed Down His Pants
+		Drag the gun into your pants before time runs out
 
 Dance
 	Florida Man Dances on Top of Police Cruiser to Ward Off Vampires
+		Jump onto police cruiser before it drives away
 
 Driving game
 	Florida Man Arrested After Driving 110 MPH While Naked with 3 Women in a Cadillac
@@ -23,29 +26,41 @@ Driving game
 Eating game
 	Florida Man Killed 5 Gators, Ate Them for Super Bowl Dinner
 	Florida Man Goes on LSD-Fueled Naked Rampage, Bites Girlfriend's Finger
+		Idea 1: Chase woman
+		Idea 2: bite her finger
 
 Florida Man in Coma After Eating 413 Red Lobster Biscuits
 
 Aim
 	Florida Man Dressed as Pirate Arrested for Firing Musket at Passing Cars
+		Aim your musket at the passing cars
+			Tap to shoot
+				If cars pass by, you lose a life
 
 Driving - watch out
 	Florida man escapes on lawnmower from intoxicated machete-wielding man
+		Hold down to drive - get to finish before machete man
 	Florida Man Steals Two TVs and a Car from Dealership, Drives Through Double Glass Doors into Another Car
+		Idea 1: fit the TVs into the stolen car before time runs out
+			Display 
 
 Collect
 	Florida Man Rips Hole in Store Ceiling, Steals More Than 70 Guns, Flees on 3-Wheel Bicycle
+		Keep tapping the ceiling until there's a hole
+			Animation will display gun stealing and fleeing on 3 wheel bike
 
 Cut
 	82-Year-Old Florida Man Slashes 88-Year-Old Florida Woman's Tires with an Ice Pick for Taking His Seat at Bingo
-
+		Tap the tire to slash it
+		Alternate: drag your finger across the screen to cut the tire
 
 Catch
 	Florida man bit by shark catches shark, says he'll eat it
-		
+		Tap the shark to catch it
+			Shark will be moving away
 	Florida Man Impersonating a Police Officer Pulls Over Real Cops
-
-Dodge
+		Tap the real cops to pull them over
+			Do it before they drive away
 
 Jump
 	Florida Man High on Meth Jumps on Strangers' Cars, Surfs Them
@@ -57,16 +72,23 @@ Run
 			If you don't get there in time, you lose a life
 	Naked Florida man forgets he's naked, chases burglars
 		Tap to run, run towards burglars
+			If burglars run away, you lose a life
 
 Broil
 	Florida Woman Set Sleeping Husband on Fire
-		Tap Florida Man until he's completely on fire
+		Tap sleeping Florida Man until he's completely on fire
+			Do it before time runs out
 
 Let Go
 	Florida Man Lands Gyrocopter on Capitol Lawn to Demand Campaign Finance Reform, Is Arrested
+		Aim the gyrocopter on the lawn
+			If it misses, you lose a life
 
 Push
+	For all "push" games, the enemy will be moving
+		If the enemy moves away, you lose a life
 	Florida man jailed for bashing uncle in the head with a toilet seat lid
+		Tap uncle to hit him with a toilet seat lid
 	Florida Man Puts Dragon Lizard in His Mouth, Smacks People with It
 		Tap the person to smack them with a lizard
 	Florida Man on Bath Salts Head-Butts Car, Slaps Fire Chief
@@ -79,7 +101,7 @@ Push
 Paint
 	Florida Man Covers Himself in Ashes, Says He's a 400-Year-Old Indian, Crashes Stolen Car
 		Keep touching Florida Man until he's covered in ashes
-
+			Do it before timer 
 Don't Drop it
 	Florida Man Under Extreme Stress Forgets How to Stand
 
