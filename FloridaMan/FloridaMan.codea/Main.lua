@@ -13,7 +13,7 @@ function setup()
     music("Project:FloridaManBG",true)
     points = 0
     textMode(CENTER)
-    gameMax = 4
+    gameMax = 6
     gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup}
     test = 0
     --person = vec2(WIDTH/4,HEIGHT/4)
@@ -81,7 +81,7 @@ function game6setup()
     person.x = math.random(1,3)
     person.y = math.random(0,1)
     enemy.x = math.random(1,3)
-    
+    enemy.y = 0
 end
 
 -- This function gets called once every frame
@@ -91,6 +91,16 @@ function draw()
         music("Project:sad-airhorn",true)
         touching = false
     end
+    for i = 1,3 do
+        fontSize(90)
+        fill(255, 0, 0, 175)
+        if i <= lives then
+            text("❤️",WIDTH/8,HEIGHT-i*HEIGHT/8)
+        else
+            text("💔",WIDTH/8,HEIGHT-i*HEIGHT/8)
+        end
+    end
+
     if lives < 0 then
         fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
         fontSize(75)
@@ -106,15 +116,6 @@ function draw()
     else
         -- This sets a dark background color
         background(255, 255, 255, 255)
-        for i = 1,3 do
-            fontSize(90)
-            fill(255, 0, 0, 175)
-            if i <= lives then
-                text("❤️",WIDTH/8,HEIGHT-i*HEIGHT/8)
-            else
-                text("💔",WIDTH/8,HEIGHT-i*HEIGHT/8)
-            end
-        end
         fill(0)
         text(points,WIDTH*6/8,HEIGHT*7/8)
         --bee game
@@ -298,22 +299,41 @@ function draw()
     
     if game == 6 then
         --person.x = #, y = 0 for row 1 for column
-        --enemy.x = one missing
+        --enemy.x = one missing, y = can draw 1, 0 can't
         --enemy2 = touch position
         fill(255,0,0,255)
         if CurrentTouch.state == ENDED then
             touching = true
         end
+        if touching and CurrentTouch.state == BEGAN and enemy.y == 0 then
+            enemy2.x = CurrentTouch.x
+            enemy2.y = CurrentTouch.y
+            enemy.y = 1
+        end
+        if enemy.y == 1 then
+             sprite("Project:Tire",enemy2.x,enemy2.y,WIDTH/8)
+        end
         sprite("Project:bingo_plate",WIDTH/5,HEIGHT/5,WIDTH/2,HEIGHT/5*4)
+        spriteMode(CENTER)
         for i = 1,3 do
             if i ~= enemy.x then
                 if person.y == 0 then
-                    ellipse(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(person.x-1)*HEIGHT/5,WIDTH/8)
+                   sprite("Project:Tire",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(person.x-1)*HEIGHT/5,WIDTH/8,WIDTH/8)
                 else
-                    ellipse(WIDTH/9+WIDTH/5+(person.x-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8)
+                    sprite("Project:Tire",WIDTH/9+WIDTH/5+(person.x-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8,WIDTH/8)
                 end
+            elseif enemy.y == 1 then
+                if enemy2.x >= WIDTH/9+WIDTH/5+(i-1)*WIDTH/7 - WIDTH/16 and enemy2.x <= WIDTH/9+WIDTH/5+(i-1)*WIDTH/7 + WIDTH/16 and enemy2.y >= HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5 - WIDTH/8 and enemy2.y <= HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5 + WIDTH/8 then
+                    points = points + 1
+                else
+                    lives = lives - 1
+                end
+                game = math.random(1,gameMax)
+                currentgame = gsetups[game]
+                currentgame()
             end
         end
+        spriteMode(CORNER)
         sprite("Project:bingo",0,0,WIDTH,HEIGHT/5)
     end
 
