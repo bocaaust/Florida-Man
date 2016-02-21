@@ -10,6 +10,8 @@ end
 -- Use this function to perform your initial setup
 
 function setup()
+points = 0
+textMode(CENTER)
 gameMax = 4
 gsetups = {game1setup,game2setup,game3setup,game4setup}
 test = 0
@@ -55,6 +57,7 @@ enemy.x = WIDTH*7/8
 person.x = WIDTH/8
 person.y = HEIGHT/4
 touching = false
+enemy2.x = 1
 end
 
 
@@ -71,6 +74,13 @@ end
 function draw()
 if lives <= 0 then
     fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
+    fontSize(75)
+    text("LMAO, You L0St",WIDTH/2,HEIGHT/2)
+    fontSize(45)
+    text("tap to try again noob",WIDTH/2,HEIGHT/4)
+    if CurrentTouch.state == BEGAN then
+    setup()
+    end
 else
 -- This sets a dark background color
 background(255, 255, 255, 255)
@@ -83,6 +93,8 @@ else
 text("💔",WIDTH/8,HEIGHT-i*HEIGHT/8)
 end
 end
+fill(0)
+text(points,WIDTH*6/8,HEIGHT*7/8)
 --bee game
 if game == 1 then
 sprite("Project:bees headline",0,0,WIDTH,HEIGHT/4)
@@ -150,10 +162,12 @@ end
 if game == 3 then
 --enemy = foot
 --player use sprite in wheelchair
-
+if CurrentTouch.state == ENDED then
+enemy2.x = 0
+end
 sprite("Project:scooter_chase", 0,0,WIDTH,HEIGHT/4)
 sprite("Project:Cannon",0,HEIGHT/4,WIDTH/6.5,HEIGHT/8)
-if CurrentTouch.state == BEGAN then
+if CurrentTouch.state == BEGAN and enemy2.x == 0 then
 touching = true
 end
 
@@ -176,6 +190,12 @@ currentgame = gsetups[game]
 currentgame()
 end
 
+if person.x > WIDTH*7/8 and person.y >= enemy.y-HEIGHT/30 and person.y < enemy.y+HEIGHT/6+HEIGHT/30  then
+game = math.random(1,gameMax)
+currentgame = gsetups[game]
+currentgame()
+end
+
 
 end
 
@@ -183,14 +203,15 @@ if game == 4 then
 --enemy will be alligators position
 --enemy2 will be position of mushroom
 --assign mushroom through math.random(1,3)
+sprite("Project:mushrooms",WIDTH/4,HEIGHT*3/4,WIDTH*3/4)
 for i = 1,3 do
---sprite("Project:Alligator",)
-rect(enemy.x*i,enemy.y,WIDTH/6,HEIGHT/2)
+sprite("Project:Alligator",enemy.x*i,enemy.y,WIDTH/4,HEIGHT/2)
+--rect(enemy.x*i,enemy.y,WIDTH/6,HEIGHT/2)
 end
 
 --Draw magic mushroom
---sprite("Project:mushroom")
-rect(enemy2.x, enemy2.y, WIDTH/16, WIDTH/16)
+sprite("Project:magic-mushroom",enemy2.x, enemy2.y, WIDTH/14)
+--rect(enemy2.x, enemy2.y, WIDTH/16, WIDTH/16)
 
 
 if CurrentTouch.state == BEGAN and touching == false then
@@ -212,7 +233,12 @@ end
 if touching and enemy.y < 0 then
 --Start bringing alligators up
 enemy.y = enemy.y + 3
+else
+game = math.random(1,gameMax)
+currentgame = gsetups[game]
+currentgame()
 end
+
 end
 
 end
