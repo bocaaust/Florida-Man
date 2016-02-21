@@ -1,6 +1,6 @@
 -- Florida man
 supportedOrientations(LANDSCAPE_ANY)
---displayMode(FULLSCREEN_NO_BUTTONS)
+displayMode(FULLSCREEN_NO_BUTTONS)
 
 function game1setup()
     enemy = vec2(WIDTH/2,0)
@@ -13,9 +13,10 @@ function setup()
     music("Project:FloridaManBG",true)
     points = 0
     textMode(CENTER)
-    gameMax = 9
-    gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup,game7setup,game8setup}
+    gameMax = 11
+    gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup,game7setup,game8setup,game9setup,game10setup,game11setup}
     test = 0
+    sounds = {"Project:charlie","Project:dramatic-chipmunk","Project:john-cena","Project:let-you-finish","Project:nyan","Project:",}
     --person = vec2(WIDTH/4,HEIGHT/4)
     person = vec2(0,0)
     rectMode(CORNER)
@@ -142,6 +143,18 @@ function game9setup()
     enemy.x = math.random(1,3)
     enemy.y = math.random(1,3)
     released=false
+end
+
+
+function game10setup()
+    person = vec2(WIDTH/5.1,HEIGHT/4)
+    enemy = vec2(WIDTH/3.3,HEIGHT/4)
+    touching = false
+end
+
+function game11setup()
+    sound("Project:rickroll")
+    touching = false
 end
 
 function drawLives()
@@ -478,11 +491,13 @@ function draw()
             for j = 1,3 do
                 if i ~= enemy.x or j ~= enemy.y then
                     --Draw regular car
-                    rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/10)
+                    sprite("Project:polics-car",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8)
+                    --rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/10)
                 end
                 if (i == enemy.x and j == enemy.y) then
                     --Draw florida man car
-                    rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/12)
+                    --rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/12)
+                    sprite("Project:florida-car",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8)
                     --when sprite is implemented, change width/12 in y to width/10
 
                 end
@@ -498,8 +513,41 @@ function draw()
             end
         end
 
-        spriteMode(CENTER)
+
+
         end
+
+
+    if game==10 then
+        sprite("Project:naked_man",0,0,WIDTH,HEIGHT/4)
+        sprite("Project:burglar",enemy.x,enemy.y,WIDTH/8,HEIGHT/6)
+
+        if CurrentTouch.state == ENDED then
+            touching = true
+        end
+        sprite("Project:player_XXX",person.x,person.y,WIDTH/8,HEIGHT/6)
+        enemy.x = enemy.x + 1.25
+        if (CurrentTouch.x > person.x and CurrentTouch.state == BEGAN) and touching then
+            touching = false
+            person.x = person.x + 15
+        end
+        if person.x > enemy.x then
+            winMiniGame()
+        end
+        if enemy.x >=WIDTH then
+            loseMiniGame()
+        end
+    end
+
+    if game== 11 then
+        sprite("Project:pepe_jeans",WIDTH/4,0,WIDTH/2)
+        if CurrentTouch.state == ENDED then
+            touching = true
+        end
+        if touching and CurrentTouch.state == BEGAN then
+            nextMiniGame()
+        end
+    end
 
 
 
