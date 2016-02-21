@@ -16,7 +16,7 @@ function setup()
     gameMax = 11
     gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup,game7setup,game8setup,game9setup,game10setup,game11setup}
     test = 0
-    sounds = {"Project:charlie","Project:dramatic-chipmunk","Project:john-cena","Project:let-you-finish","Project:nyan","Project:",}
+    sounds = {"Project:charlie","Project:dramatic-chipmunk","Project:john-cena","Project:let-you-finish","Project:nyan","Project:troll","Project:barrel-roll","Project:chocolate-rain","Project:dont-taze","Project:magnets","Project:spoon"}
     --person = vec2(WIDTH/4,HEIGHT/4)
     person = vec2(0,0)
     rectMode(CORNER)
@@ -42,6 +42,7 @@ end
 function winMiniGame()
     points = points +1
     nextMiniGame()
+    sound(sounds[math.random(1,11)])
 end
 
 function loseMiniGame()
@@ -275,7 +276,7 @@ function draw()
                 loseMiniGame()
             end
             
-            if person.x > WIDTH*7/8 and person.y >= enemy.y+WIDTH/20 and person.y < enemy.y+HEIGHT/6-WIDTH/20  then
+            if person.x > WIDTH*7/8 and person.x < WIDTH and person.y >= enemy.y+WIDTH/20 and person.y < enemy.y+HEIGHT/6-WIDTH/20  then
                 winMiniGame()
             end
             
@@ -477,7 +478,7 @@ function draw()
     end
 
     if game == 9 then
-        spriteMode(CORNER)
+        sprite("Project:cop",0,0,WIDTH,HEIGHT/4)
         if CurrentTouch.state == ENDED then
             touching = true
         end
@@ -491,18 +492,19 @@ function draw()
             for j = 1,3 do
                 if i ~= enemy.x or j ~= enemy.y then
                     --Draw regular car
-                    sprite("Project:polics-car",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8)
+                    sprite("Project:police-car",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8)
                     --rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/10)
                 end
                 if (i == enemy.x and j == enemy.y) then
                     --Draw florida man car
-                    --rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/12)
-                    sprite("Project:florida-car",WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8)
+                    --rect(WIDTH/9+WIDTH/5+(en-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/12)
                     --when sprite is implemented, change width/12 in y to width/10
 
                 end
             end
         end
+sprite("Project:florida-car",WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(enemy.y-1)*HEIGHT/5,WIDTH/8)
+
 
         --Check for touch
         if released then
@@ -526,10 +528,10 @@ function draw()
             touching = true
         end
         sprite("Project:player_XXX",person.x,person.y,WIDTH/8,HEIGHT/6)
-        enemy.x = enemy.x + 1.25
+        enemy.x = enemy.x + math.ceil(WIDTH/819)
         if (CurrentTouch.x > person.x and CurrentTouch.state == BEGAN) and touching then
             touching = false
-            person.x = person.x + 15
+            person.x = person.x + math.ceil(WIDTH/68)
         end
         if person.x > enemy.x then
             winMiniGame()
@@ -540,13 +542,24 @@ function draw()
     end
 
     if game== 11 then
-        sprite("Project:pepe_jeans",WIDTH/4,0,WIDTH/2)
+        sprite("Project:pepe_jeans",WIDTH/4,-80,WIDTH/2)
         if CurrentTouch.state == ENDED then
             touching = true
         end
         if touching and CurrentTouch.state == BEGAN then
             nextMiniGame()
         end
+    end
+
+
+    if lives < 0 then
+        drawLives()
+        fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
+        fontSize(75*WIDTH/1024)
+        text("LMAO, You L0St",WIDTH/2,HEIGHT/2)
+        fontSize(45*WIDTH/1024)
+        text("tap to try again noob",WIDTH/2,HEIGHT/4)
+
     end
 
 
