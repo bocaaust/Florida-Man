@@ -272,7 +272,7 @@ function draw()
             
             enemy.y = enemy.y - 2
             
-            if enemy.y <= 0 then
+            if enemy.y <= 0 or person.x > WIDTH then
                 loseMiniGame()
             end
             
