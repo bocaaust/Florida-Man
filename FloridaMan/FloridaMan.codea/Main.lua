@@ -310,7 +310,7 @@ function draw()
         for i = 1,3 do
             if i ~= enemy.x then
                 if person.y == 0 then
-                    ellipse(WIDTH/12+WIDTH/5+(i-1)*WIDTH/6,HEIGHT/10+HEIGHT/4.75+person.x*HEIGHT/,WIDTH/8)
+                    ellipse(WIDTH/12+WIDTH/5+(i-1)*WIDTH/6,HEIGHT/10+HEIGHT/4.75+person.x*HEIGHT/6.5,WIDTH/8)
                 else
                     ellipse(WIDTH/12+WIDTH/5+person.x*WIDTH/12,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8)
                 end
