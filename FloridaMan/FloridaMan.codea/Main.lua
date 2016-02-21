@@ -28,7 +28,7 @@ enemy2 = vec2(0,0)
 
 
 --game = math.random(1,gameMax)
-game = 4
+game = 6
 gsetups[game]()
 end
 
@@ -270,18 +270,19 @@ end
 end
 
 if game == 5 then
-rect(enemy.x,enemy.y,WIDTH/15,HEIGHT/8)
+sprite("Project:naked_man",0,0,WIDTH,HEIGHT/4)
+sprite("Project:burglar",enemy.x,enemy.y,WIDTH/8,HEIGHT/6)
 
 if CurrentTouch.state == ENDED then
 touching = true
 end
-sprite("Project:player_XXX",person.x,person.y,WIDTH/15,HEIGHT/8)
+sprite("Project:player_XXX",person.x,person.y,WIDTH/8,HEIGHT/6)
 enemy.x = enemy.x + 1.25
 if (CurrentTouch.x > person.x and CurrentTouch.state == BEGAN) and touching then
 touching = false
 person.x = person.x + 20
 end
-if person.x > enemy.x+(WIDTH/15) then
+if person.x > enemy.x then
 game = math.random(1,gameMax)
 points = points +1
 currentgame = gsetups[game]
@@ -303,14 +304,15 @@ fill(255,0,0,255)
 if CurrentTouch.state == ENDED then
 touching = true
 end
-
+person.y = 0
+person.x = 3
 sprite("Project:bingo_plate",WIDTH/5,HEIGHT/5,WIDTH/2,HEIGHT/5*4)
 for i = 1,3 do
 if i ~= enemy.x then
 if person.y == 0 then
-ellipse(WIDTH/4.5+i*WIDTH/6,HEIGHT/5+person.x*HEIGHT/5,WIDTH/8)
+ellipse(WIDTH/12+WIDTH/5+(i-1)*WIDTH/6,HEIGHT/10+HEIGHT/4.75+person.x*HEIGHT/,WIDTH/8)
 else
-ellipse(HEIGHT/5+person.x*HEIGHT/5,WIDTH/4.5+i*WIDTH/6,WIDTH/8)
+ellipse(WIDTH/12+WIDTH/5+person.x*WIDTH/12,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8)
 end
 end
 end
