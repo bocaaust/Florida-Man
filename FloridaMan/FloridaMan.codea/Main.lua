@@ -14,7 +14,7 @@ function setup()
     points = 0
     textMode(CENTER)
     gameMax = 6
-    gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup}
+    gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup,game7setup,game8setup}
     test = 0
     --person = vec2(WIDTH/4,HEIGHT/4)
     person = vec2(0,0)
@@ -28,7 +28,7 @@ function setup()
     
     
     --game = math.random(1,gameMax)
-    game = 6
+    game = 8
     gsetups[game]()
 end
 
@@ -82,6 +82,20 @@ function game6setup()
     person.y = math.random(0,1)
     enemy.x = math.random(1,3)
     enemy.y = 0
+end
+
+function game7setup()
+
+end
+
+function game8setup()
+--enemy = position of red car
+--person = player position, use surf, use sin for vertical jump
+    touching = false
+    enemy.y = HEIGHT/3
+    enemy.x = WIDTH
+    person.x = WIDTH/2
+    person.y = HEIGHT/3
 end
 
 -- This function gets called once every frame
@@ -335,6 +349,20 @@ function draw()
         end
         spriteMode(CORNER)
         sprite("Project:bingo",0,0,WIDTH,HEIGHT/5)
+    end
+
+    if game == 7 then
+
+    end
+
+    if game == 8 then
+        --enemy = position of red car
+        --person = player position, use surf, use sin for vertical jump
+        sprite("Project:surf",0,0,WIDTH,HEIGHT/3)
+        sprite("Project:player_surf",person.x-WIDTH/11,person.y,WIDTH/5,HEIGHT/3)
+        sprite("Project:red-car",enemy.x,enemy.y,WIDTH/4)
+        enemy.x = enemy.x - 2.5
+
     end
 
 end
