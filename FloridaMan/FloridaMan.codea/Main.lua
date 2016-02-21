@@ -13,7 +13,7 @@ function setup()
     music("Project:FloridaManBG",true)
     points = 0
     textMode(CENTER)
-    gameMax = 8
+    gameMax = 9
     gsetups = {game1setup,game2setup,game3setup,game4setup,game5setup,game6setup,game7setup,game8setup}
     test = 0
     --person = vec2(WIDTH/4,HEIGHT/4)
