@@ -10,6 +10,7 @@ end
 -- Use this function to perform your initial setup
 
 function setup()
+music("Project:FloridaManBG",true)
 points = 0
 textMode(CENTER)
 gameMax = 4
@@ -72,13 +73,21 @@ end
 
 -- This function gets called once every frame
 function draw()
-if lives <= 0 then
+if lives == 0 then
+lives = lives -1
+music("Project:sad-airhorn",true)
+touching = false
+end
+if lives < 0 then
     fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
     fontSize(75)
     text("LMAO, You L0St",WIDTH/2,HEIGHT/2)
     fontSize(45)
     text("tap to try again noob",WIDTH/2,HEIGHT/4)
-    if CurrentTouch.state == BEGAN then
+    if CurrentTouch.state == ENDED then
+        touching = true
+    end
+    if CurrentTouch.state == BEGAN and touching then
     setup()
     end
 else
@@ -109,6 +118,7 @@ person.x = person.x + 1.25
 end
 if person.x >= WIDTH*7/8 then
 game = math.random(1,gameMax)
+points = points +1
 currentgame = gsetups[game]
 currentgame()
 end
@@ -134,6 +144,7 @@ touching = true
 person.x = person.x + 1.75
 end
 if person.x >= WIDTH*7/8 then
+points = points +1
 game = math.random(1,gameMax)
 currentgame = gsetups[game]
 currentgame()
@@ -190,8 +201,9 @@ currentgame = gsetups[game]
 currentgame()
 end
 
-if person.x > WIDTH*7/8 and person.y >= enemy.y-HEIGHT/30 and person.y < enemy.y+HEIGHT/6+HEIGHT/30  then
+if person.x > WIDTH*7/8 and person.y >= enemy.y+WIDTH/25 and person.y < enemy.y+HEIGHT/6-WIDTH/25  then
 game = math.random(1,gameMax)
+points = points +1
 currentgame = gsetups[game]
 currentgame()
 end
@@ -234,6 +246,7 @@ if touching and enemy.y < 0 then
 --Start bringing alligators up
 enemy.y = enemy.y + 3
 else
+points = points +1
 game = math.random(1,gameMax)
 currentgame = gsetups[game]
 currentgame()
