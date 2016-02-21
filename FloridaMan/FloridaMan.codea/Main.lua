@@ -1,6 +1,6 @@
 -- Florida man
 supportedOrientations(LANDSCAPE_ANY)
-displayMode(FULLSCREEN_NO_BUTTONS)
+--displayMode(FULLSCREEN_NO_BUTTONS)
 
 function game1setup()
     enemy = vec2(WIDTH/2,0)
@@ -27,16 +27,15 @@ function setup()
     enemy2 = vec2(0,0)
     released=false
     backwards=false
-    game = 6
+   -- game = 6
    -- game = math.random(1,gameMax)
-    gsetups[game]()
-    --nextMiniGame()
+    --gsetups[game]()
+    nextMiniGame()
 end
 
 function nextMiniGame()
     game = math.random(1,gameMax)
-    currentgame = gsetups[game]
-    currentgame()
+    gsetups[game]()
 end
 
 function winMiniGame()
@@ -99,12 +98,15 @@ function game6setup()
     person.x = math.random(1,3)
     person.y = math.random(0,1)
     enemy.x = math.random(1,3)
+    if person.x == 3 and person.y == 0 and enemy.x == 1 then
+    enemy.x = enemy.x +1
+    end
     enemy.y = 0
 end
 
 function game7setup()
-    enemy.x=math.random(math.ceil(WIDTH/6),WIDTH*7/8)
-    person.x=math.random(math.ceil(WIDTH/6),WIDTH*7/8)
+    enemy.x=math.random(math.ceil(WIDTH/6),math.ceil(WIDTH*7/8))
+    person.x=math.random(math.ceil(WIDTH/6),math.ceil(WIDTH*7/8))
     person.y=HEIGHT*5/8
     enemy2.x=person.x
     enemy2.y=person.y
@@ -125,6 +127,21 @@ function game8setup()
     person.y = HEIGHT/3
     enemy2.x = 0
     enemy2.y = 0
+end
+
+function game9setup()
+    touching = false
+    --person.x = #, y = 0 for row 1 for column
+    --enemy.x = one missing
+    --enemy2 = touch position
+    enemy2.x = 0
+    enemy2.y = 0
+
+    person.x = math.random(1,3)
+    person.y = math.random(1,3)
+    enemy.x = math.random(1,3)
+    enemy.y = math.random(1,3)
+    released=false
 end
 
 function drawLives()
@@ -340,10 +357,29 @@ function draw()
                     sprite("Project:Tire",WIDTH/9+WIDTH/5+(person.x-1)*WIDTH/7,HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5,WIDTH/8,WIDTH/8)
                 end
             elseif enemy.y == 1 then
-                if enemy2.x >= WIDTH/9+WIDTH/5+(i-1)*WIDTH/7 - WIDTH/12 and enemy2.x <= WIDTH/9+WIDTH/5+(i-1)*WIDTH/7 + WIDTH/12 and enemy2.y >= HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5 - WIDTH/8 and enemy2.y <= HEIGHT/10+HEIGHT/4.75+(i-1)*HEIGHT/5 + WIDTH/8 then
+                print(enemy2.x)
+                print(WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 - WIDTH/5)
+                print(WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 + WIDTH/6)
+                print(enemy2.y)
+                print(HEIGHT/10+HEIGHT/4.75+(enemy.x-1.1)*HEIGHT/5- WIDTH/6)
+                print(HEIGHT/10+HEIGHT/4.75+(enemy.x-1.1)*HEIGHT/5 + WIDTH/5)
+                if enemy2.x >= WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 - WIDTH/5 and enemy2.x <= WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 + WIDTH/6 and enemy2.y >= HEIGHT/10+HEIGHT/4.75+(enemy.x-1.1)*HEIGHT/5 - WIDTH/6 and enemy2.y <= HEIGHT/10+HEIGHT/4.75+(enemy.x-1.1)*HEIGHT/5 + WIDTH/5 then
                     winMiniGame()
                 else
+
+                    if (person.x == 1 and person.y == 0 and enemy.x == 3) or (person.x == 3 and y == 0 and enemy.x == 1) then
+                        if enemy2.x < WIDTH/5+WIDTH/7 or enemy2.x > WIDTH/5+WIDTH/2-WIDTH/2.5 then
+                            if enemy2.y < HEIGHT/4.75+WIDTH/8 or enemy2.y > HEIGHT*3/5 then
+                                    winMiniGame()
+                            else
+                                loseMiniGame()
+                            end
+                        else
+                            loseMiniGame()
+                        end
+                    else
                     loseMiniGame()
+                    end
                 end
             end
         end
@@ -352,6 +388,7 @@ function draw()
     end
 
     if game==7 then
+        sprite("Project:pizza",0,0,WIDTH,HEIGHT/3)
         --rect(person.x,person.y,WIDTH/7,HEIGHT/8)
         sprite("Project:pizza-man",person.x,person.y,WIDTH/7)
         --rect(enemy.x,enemy.y,WIDTH/12,HEIGHT/8)
@@ -425,5 +462,46 @@ function draw()
             end
         end
     end
+
+    if game == 9 then
+        spriteMode(CORNER)
+        if CurrentTouch.state == ENDED then
+            touching = true
+        end
+        if touching and CurrentTouch.state == BEGAN and released == false then
+            enemy2.x = CurrentTouch.x
+            enemy2.y = CurrentTouch.y
+            touching = false
+            released=true
+        end
+        for i = 1,3 do
+            for j = 1,3 do
+                if i ~= enemy.x or j ~= enemy.y then
+                    --Draw regular car
+                    rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/10)
+                end
+                if (i == enemy.x and j == enemy.y) then
+                    --Draw florida man car
+                    rect(WIDTH/9+WIDTH/5+(i-1)*WIDTH/7, HEIGHT/10+HEIGHT/4.75+(j-1)*HEIGHT/5,WIDTH/8,WIDTH/12)
+                    --when sprite is implemented, change width/12 in y to width/10
+
+                end
+            end
+        end
+
+        --Check for touch
+        if released then
+            if enemy2.x >= WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 and enemy2.x <= WIDTH/9+WIDTH/5+(enemy.x-1)*WIDTH/7 + WIDTH/8 and enemy2.y >= HEIGHT/10+HEIGHT/4.75+(enemy.y-1)*HEIGHT/5 and enemy2.y <= HEIGHT/10+HEIGHT/4.75+(enemy.y-1)*HEIGHT/5 + WIDTH/10 then
+                winMiniGame()
+            else
+                loseMiniGame()
+            end
+        end
+
+        spriteMode(CENTER)
+        end
+
+
+
 
 end
